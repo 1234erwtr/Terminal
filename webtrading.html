@@ -3,336 +3,527 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DION ELITE v21.6 | MT5 COMMANDER 📈💎</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>TERMINAL DION v23.1 | ULTRA PRECISION HUB</title>
+  
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         :root {
-            --bg-primary: #0a0f1c;
-            --bg-gradient: linear-gradient(135deg, #0a0f1c, #111827);
-            --card-bg: #172036;
-            --accent: #00d4ff;
-            --accent-glow: rgba(0, 212, 255, 0.45);
-            --accent-dark: #0099cc;
-            --green: #10e981;
-            --red: #ff4d4d;
-            --border: #1f2a44;
-            --text-primary: #e2e8f0;
-            --text-secondary: #94a3b8;
-            --input-bg: #0f1624;
-            --shadow-soft: 0 10px 35px rgba(0, 0, 0, 0.6);
-            --shadow-glow: 0 0 40px rgba(0, 212, 255, 0.35);
+            --primary: #3B57EE;
+            --primary-dark: #2D44C4;
+            --primary-light: rgba(59, 87, 238, 0.08);
+            --bg-body: #F1F5F9;
+            --bg-card: #FFFFFF;
+            --bg-sidebar: #FFFFFF;
+            --border: #E2E8F0;
+            --text-main: #0F172A;
+            --text-dim: #64748B;
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --sidebar-w: 90px;
+            --header-h: 80px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
+            --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.05);
+            --radius: 20px;
+            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        body.dark-mode {
+            --bg-body: #020617;
+            --bg-card: #0F172A;
+            --bg-sidebar: #0F172A;
+            --border: #1E293B;
+            --text-main: #F1F5F9;
+            --text-dim: #94A3B8;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg-gradient); color: var(--text-primary); font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
-        #loader {
-            position: fixed; inset: 0; z-index: 9999;
-            background: linear-gradient(135deg, #000428, #004e92);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--accent); font-size: 32px; font-weight: 800; letter-spacing: 3px;
-            transition: opacity 1.2s ease;
+      
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-body);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            transition: var(--transition);
         }
-        #loader.hidden { opacity: 0; pointer-events: none; }
-        .loader-title { font-size: 48px; text-shadow: 0 0 35px var(--accent-glow); margin-bottom: 20px; }
-        .loader-candles { font-size: 120px; display: flex; gap: 40px; margin: 30px 0; }
-        .candle { animation: candleFloat 4s infinite ease-in-out; text-shadow: 0 0 45px var(--accent-glow); }
-        .candle:nth-child(2) { animation-delay: 0.8s; }
-        .candle:nth-child(3) { animation-delay: 1.6s; }
-        @keyframes candleFloat { 0%, 100% { transform: translateY(0) rotate(0deg) scale(1); } 50% { transform: translateY(-25px) rotate(3deg) scale(1.1); } }
-        .loader-subtitle { font-size: 20px; opacity: 0.9; margin-top: 15px; letter-spacing: 1.5px; }
-        .header-top {
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: linear-gradient(to bottom, #000, #0a0f1c); border-bottom: 4px solid var(--accent);
-            box-shadow: 0 8px 45px rgba(0, 212, 255, 0.3);
+        .sidebar {
+            width: var(--sidebar-w);
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 35px 0;
+            z-index: 100;
+            flex-shrink: 0;
         }
-        .ticker-bar { height: 65px; background: #000; overflow: hidden; border-bottom: 1px solid var(--border); }
-        nav {
-            display: flex; justify-content: center; gap: 20px; padding: 15px 0;
-            background: rgba(23, 32, 54, 0.96); backdrop-filter: blur(25px);
+        .brand {
+            width: 58px;
+            height: 58px;
+            background: linear-gradient(135deg, var(--primary), #6366F1);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            margin-bottom: 50px;
+            box-shadow: 0 12px 24px rgba(59, 87, 238, 0.25);
         }
-        .nav-btn {
-            padding: 12px 28px; border-radius: 20px; border: 2px solid transparent;
-            background: rgba(255,255,255,0.06); color: #c3d2ff; font-weight: 700; font-size: 14px;
-            cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            text-transform: uppercase; letter-spacing: 1.2px;
+        .nav-items {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex: 1;
         }
-        .nav-btn:hover {
-            background: rgba(0, 212, 255, 0.25); color: white;
-            transform: translateY(-4px) scale(1.06); box-shadow: 0 0 35px var(--accent-glow);
+        .nav-link {
+            width: 58px;
+            height: 58px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            position: relative;
         }
-        .nav-btn.active {
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #000;
-            border-color: var(--accent); box-shadow: 0 0 40px var(--accent-glow);
-            transform: scale(1.1);
+        .nav-link i { font-size: 26px; }
+        .nav-link span { font-size: 9px; font-weight: 800; margin-top: 4px; text-transform: uppercase; }
+        .nav-link:hover { color: var(--primary); background: var(--primary-light); }
+        .nav-link.active { color: var(--primary); background: var(--primary-light); }
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: -18px;
+            width: 5px;
+            height: 30px;
+            background: var(--primary);
+            border-radius: 0 4px 4px 0;
         }
-        .main-container {
-            padding: 160px 40px 80px; max-width: 1800px; margin: 0 auto;
+        .main-container { flex: 1; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        header {
+            height: var(--header-h);
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 45px;
+            z-index: 90;
+            flex-shrink: 0;
         }
-        .page { display: none; animation: fadeInUp 1s ease-out; }
-        .page.active { display: grid; grid-template-columns: repeat(auto-fit, minmax(560px, 1fr)); gap: 40px; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-        .card {
-            background: var(--card-bg); border: 1px solid var(--border); border-radius: 28px;
-            padding: 40px; box-shadow: var(--shadow-soft), var(--shadow-glow);
-            position: relative; overflow: hidden; transition: all 0.5s ease;
+        .header-title h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+        .header-info { display: flex; align-items: center; gap: 20px; }
+        .live-badge {
+            background: #ECFDF5;
+            color: var(--success);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
         }
-        .card::before {
-            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle at 30% 20%, rgba(0, 212, 255, 0.18) 0%, transparent 60%);
-            pointer-events: none; animation: glowRotate 30s linear infinite;
+        .content-body {
+            flex: 1;
+            padding: 35px 45px;
+            overflow-y: auto;
         }
-        @keyframes glowRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .card:hover { transform: translateY(-15px) scale(1.02); box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 55px var(--accent-glow); }
-        h2 {
-            font-size: 28px; color: var(--accent); margin-bottom: 32px; font-weight: 800;
-            letter-spacing: 1.5px; text-shadow: 0 0 20px var(--accent-glow);
-            display: flex; align-items: center; gap: 14px;
+        .module { display: none; animation: fadeIn 0.4s ease-out; }
+        .module.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        label { display: block; font-size: 13px; color: #b0cfff; margin-bottom: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        .input-pro, select.input-pro {
-            width: 100%; padding: 16px 20px; background: var(--input-bg); border: 2px solid var(--border);
-            border-radius: 16px; color: white; font-size: 16px; outline: none; transition: all 0.4s ease;
+        .chart-container {
+            height: 70vh;
+            min-height: 500px;
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            position: relative;
         }
-        .input-pro:focus, select.input-pro:focus {
-            border-color: var(--accent); box-shadow: 0 0 30px var(--accent-glow); background: #0e1a2e;
+        #tradingview_pro { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .chart-skeleton {
+            position: absolute; inset: 0; background: linear-gradient(90deg, rgba(200,200,200,0.1) 25%, rgba(180,180,180,0.15) 50%, rgba(200,200,200,0.1) 75%);
+            background-size: 200% 100%; animation: loading 1.8s infinite; z-index: 1;
         }
-        .btn-main {
-            width: 100%; padding: 18px; border: none; border-radius: 18px;
-            background: linear-gradient(135deg, var(--accent), #00b3e6); color: #000;
-            font-weight: 800; font-size: 17px; cursor: pointer; transition: all 0.4s ease;
-            text-transform: uppercase; letter-spacing: 1.5px; box-shadow: 0 10px 35px rgba(0, 212, 255, 0.4);
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; max-width: 700px; margin: 0 auto; box-shadow: var(--shadow-md); }
+        .card-head { margin-bottom: 35px; display: flex; align-items: center; gap: 15px; }
+        .card-head i { font-size: 24px; color: var(--primary); }
+        .card-head h3 { font-size: 18px; font-weight: 800; }
+        .form-group { margin-bottom: 25px; }
+        label { display: block; font-size: 11px; font-weight: 800; color: var(--text-dim); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.8px; }
+        input, select {
+            width: 100%; padding: 16px 20px; border: 1px solid var(--border); border-radius: 16px;
+            background: var(--bg-body); color: var(--text-main); font-family: inherit; font-size: 15px; font-weight: 600;
+            outline: none; transition: var(--transition);
         }
-        .btn-main:hover {
-            transform: translateY(-5px) scale(1.03); box-shadow: 0 20px 60px var(--accent-glow);
-            background: linear-gradient(135deg, #00e6ff, var(--accent));
+        input:focus { border-color: var(--primary); box-shadow: 0 0 0 5px var(--primary-light); background: var(--bg-card); }
+        .result-panel {
+            margin-top: 30px; padding: 35px; border-radius: 20px; text-align: center;
+            background: var(--bg-body); border: 2px dashed var(--border); transition: var(--transition);
         }
-        .sig-box {
-            padding: 36px; border-radius: 22px; text-align: center; font-size: 32px; font-weight: 900;
-            margin-top: 32px; display: none; border: 3px solid; animation: pulseElite 2.5s infinite;
-            box-shadow: 0 0 45px var(--accent-glow);
+        .result-panel.highlight { background: var(--primary-light); border-color: var(--primary); }
+        .result-panel.up { background: #ECFDF5; border-color: var(--success); color: var(--success); }
+        .result-panel.down { background: #FEF2F2; border-color: var(--danger); color: var(--danger); }
+        .val-large { font-size: 38px; font-weight: 800; display: block; line-height: 1.2; }
+        .val-label { font-size: 11px; font-weight: 700; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-action {
+            width: 100%; padding: 18px; background: var(--primary); color: white; border: none;
+            border-radius: 16px; font-weight: 800; font-size: 15px; cursor: pointer;
+            transition: var(--transition); margin-top: 10px;
         }
-        @keyframes pulseElite { 0%, 100% { opacity: 0.92; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } }
-        .buy-sig { background: rgba(16, 233, 129, 0.2); color: var(--green); border-color: var(--green); }
-        .sell-sig { background: rgba(255, 77, 77, 0.2); color: var(--red); border-color: var(--red); }
-        .check-grid { display: flex; flex-direction: column; gap: 18px; }
-        .check-item {
-            padding: 22px 30px; background: rgba(255,255,255,0.05); border: 2px solid var(--border);
-            border-radius: 18px; cursor: pointer; transition: all 0.4s ease; font-size: 16px; font-weight: 500;
+        .btn-action:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(59, 87, 238, 0.2); }
+        footer {
+            height: 45px; background: var(--bg-card); border-top: 1px solid var(--border);
+            display: flex; align-items: center; padding: 0 45px; font-size: 11px; font-weight: 700;
+            color: var(--text-dim); justify-content: space-between; flex-shrink: 0;
         }
-        .check-item:hover { background: rgba(0, 212, 255, 0.15); border-color: var(--accent); transform: translateX(8px); }
-        .check-item.active { border-color: var(--accent); background: rgba(0, 212, 255, 0.2); box-shadow: 0 0 35px var(--accent-glow); color: white; }
-        @media (max-width: 1100px) {
-            .page.active { grid-template-columns: 1fr; }
-            .main-container { padding: 150px 20px 60px; }
-            nav { gap: 15px; flex-wrap: wrap; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+        @media (max-width: 768px) {
+            body { overflow-y: auto; }
+            .sidebar { width: 80px; }
+            header, footer, .content-body { padding-left: 20px; padding-right: 20px; }
+            .chart-container { min-height: 400px; height: 60vh; }
         }
     </style>
 </head>
-<body onclick="enableAudio()" onload="initVoice()">
-    <div id="loader">
-        <div class="loader-candles">
-            <span class="candle">📈</span><span class="candle">📉</span><span class="candle">📈</span>
+<body id="app">
+    <aside class="sidebar">
+        <div class="brand"><i class='bx bxs-terminal'></i></div>
+        <div class="nav-items">
+            <div class="nav-link active" onclick="switchTab('tab-chart', this)">
+                <i class='bx bx-area'></i><span>Chart</span>
+            </div>
+            <div class="nav-link" onclick="switchTab('tab-news', this)">
+                <i class='bx bx-news'></i><span>News</span>
+            </div>
+            <div class="nav-link" onclick="switchTab('tab-lot', this)">
+                <i class='bx bx-calculator'></i><span>Lot</span>
+            </div>
+            <div class="nav-link" onclick="switchTab('tab-settings', this)">
+                <i class='bx bx-cog'></i><span>Set</span>
+            </div>
         </div>
-        <div class="loader-title">TRADING SYSTEM KAPTEN DION 💎</div>
-        <div class="loader-subtitle">Elite Terminal v21.6 • Loading... 📊</div>
-    </div>
-    <div class="header-top">
-        <!-- Ticker baru dari TradingView custom script lu (7-14 symbols utama) -->
-        <div class="ticker-bar">
-            <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
-            <tv-ticker-tape 
-                symbols='IDX:COMPOSITE,FX_IDC:USDIDR,FOREXCOM:NAS100,FOREXCOM:SPX500,FOREXCOM:XAUUSD,FOREXCOM:XAGUSD,FOREXCOM:USDJPY,FOREXCOM:USDCHF,FOREXCOM:USDCAD,FOREXCOM:GBPJPY,FOREXCOM:GBPUSD,FOREXCOM:EURUSD,FOREXCOM:AUDUSD,FOREXCOM:NZDUSD'
-                hide-chart>
-            </tv-ticker-tape>
+        <div class="nav-link" onclick="toggleTheme()" style="margin-top: auto;">
+            <i class='bx bx-moon' id="theme-icon"></i>
         </div>
-        <nav>
-            <button class="nav-btn active" onclick="tab('news')">📰 NEWS ENGINE</button>
-            <button class="nav-btn" onclick="tab('calc')">💰 KALKULATOR LOT</button>
-            <button class="nav-btn" onclick="tab('entry')">CHECKLIST ENTRY MARKET</button>
-        </nav>
-    </div>
+    </aside>
+
     <div class="main-container">
-        <section id="p-news" class="page active">
-            <div class="card">
-                <h2>🖥️ News Prediction Terminal 📊</h2>
-                <div class="field">
-                    <label>TIPE DATA RILIS</label>
-                    <select id="n-type" class="input-pro">
-                        <option value="std">Ekonomi Umum (CPI, GDP, NFP)</option>
-                        <option value="job">Pengangguran (Unemployment)</option>
-                        <option value="jpy">Suku Bunga / Kebijakan Bank</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label>DAMPAK</label>
-                    <select id="n-impact" class="input-pro">
-                        <option value="high">High Impact (Kuat)</option>
-                        <option value="medium">Medium Impact (Sedang)</option>
-                        <option value="low">Low Impact (Biasa)</option>
-                    </select>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
-                    <div class="field"><label>PREVIOUS</label><input type="number" id="n-prev" class="input-pro" placeholder="Nilai Sebelumnya"></div>
-                    <div class="field"><label>FORECAST</label><input type="number" id="n-forc" class="input-pro" placeholder="Ramalan"></div>
-                </div>
-                <div class="field"><label>ACTUAL (RILIS AKTUAL)</label><input type="number" id="n-act" class="input-pro" placeholder="Masukkan Nilai Aktual"></div>
-                <button class="btn-main" onclick="predict()">PREDIKSI ARAH 🔊 🟢🔴</button>
-                <div id="n-res" class="sig-box">---</div>
+        <header>
+            <div class="header-title">
+                <h2 id="head-text">TERMINAL <span style="color:var(--primary)">DION</span></h2>
             </div>
-            <div class="card">
-                <h2>📅 Economic Calendar Live (Investing.com)</h2>
-                <iframe src="https://www.investing.com/economic-calendar/" width="100%" height="680" frameborder="0" style="border-radius:20px; background:transparent;"></iframe>
-                <p style="font-size:12px; color:var(--text-secondary); text-align:center; margin-top:10px;">Kalau iframe lambat, buka langsung investing.com/economic-calendar untuk full view.</p>
+            <div class="header-info">
+                <div class="live-badge" id="badge-p">XAUUSD Focus</div>
+                <div style="font-weight: 800; font-size: 14px; color: var(--text-dim);" id="clock">00:00:00</div>
             </div>
-        </section>
-        <section id="p-calc" class="page">
-            <div class="card">
-                <h2>💎 Kalkulator Lot Sultan</h2>
-                <div class="field">
-                    <label>Jenis Akun</label>
-                    <select id="acc-type" class="input-pro">
-                        <option value="100000">Standard (1 lot = 100,000 unit)</option>
-                        <option value="10000">Mini (1 lot = 10,000 unit)</option>
-                        <option value="1000">Micro (1 lot = 1,000 unit)</option>
-                        <option value="100">Cent (1 lot = 100 unit)</option>
-                    </select>
+        </header>
+
+        <main class="content-body">
+            <div id="tab-chart" class="module active">
+                <div class="chart-container">
+                    <div class="chart-skeleton" id="chart-skel"></div>
+                    <div id="tradingview_pro"></div>
                 </div>
-                <div class="field"><label>Saldo Akun (USD)</label><input type="number" id="c-bal" class="input-pro" value="1000"></div>
-                <div class="field"><label>Risk per Trade (%)</label><input type="number" id="c-risk" class="input-pro" value="1"></div>
-                <div class="field"><label>Stop Loss (Pips)</label><input type="number" id="c-sl" class="input-pro" placeholder="Contoh: 40 - 60"></div>
-                <div class="field"><label>Pip Value ($ per lot)</label><input type="number" id="pip-val" class="input-pro" value="10" placeholder="Default 10 untuk majors"></div>
-                <button class="btn-main" onclick="calcLot()">HITUNG LOT 💎</button>
             </div>
-            <div class="card" style="text-align:center; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                <h2>Lot Rekomendasi 📏</h2>
-                <div id="res-lot" style="font-size:140px; font-weight:900; color:var(--accent); margin:30px 0; text-shadow:0 0 30px var(--accent-glow);">0.00</div>
-                <div id="res-money" style="font-size:32px; color:var(--red); font-weight:700;">$0.00 Risk Amount</div>
-            </div>
-        </section>
-        <section id="p-entry" class="page">
-            <div class="card">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px;">
-                    <h2>✈️ Checklist Entry Market ✅</h2>
-                    <button onclick="resetEntry()" style="background:var(--red); color:white; border:none; padding:12px 28px; border-radius:14px; cursor:pointer; font-weight:700; font-size:15px;">RESET CHECKLIST 🔄</button>
+
+            <div id="tab-news" class="module">
+                <div class="card">
+                    <div class="card-head">
+                        <i class='bx bx-radar'></i>
+                        <h3 data-lang="t_news">Economic Logic Predictor</h3>
+                    </div>
+                    <div class="form-group">
+                        <label data-lang="l_type">Event Type</label>
+                        <select id="n-type" onchange="debounceRunNews()">
+                            <option value="percent">Percentage (CPI, Rates, GDP)</option>
+                            <option value="normal">Normal Index (NFP, Jobs)</option>
+                            <option value="unemployment">Unemployment (Inverse Logic)</option>
+                        </select>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label data-lang="l_prev">Previous</label>
+                            <input type="number" step="0.01" id="n-prev" placeholder="0.00" oninput="debounceRunNews()">
+                        </div>
+                        <div class="form-group">
+                            <label data-lang="l_forc">Forecast</label>
+                            <input type="number" step="0.01" id="n-forc" placeholder="0.00" oninput="debounceRunNews()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-lang="l_act">Actual Release</label>
+                        <input type="number" step="0.01" id="n-act" placeholder="Input when data is out..." oninput="debounceRunNews()">
+                    </div>
+                    <div id="news-res-panel" class="result-panel highlight">
+                        <span class="val-label" id="n-stat" data-lang="st_wait">Waiting for analysis...</span>
+                        <span class="val-large" id="n-result" style="font-size: 26px;">0.0000</span>
+                    </div>
                 </div>
-                <div class="check-grid">
-                    <div class="check-item" onclick="toggle(this, 'Struktur Market')">Struktur Market Searah (H4/H1) 📊</div>
-                    <div class="check-item" onclick="toggle(this, 'SNR / SnD')">Harga di Area SNR / SnD Valid 📍</div>
-                    <div class="check-item" onclick="toggle(this, 'Fibonacci')">Fibonacci Level 61.8 - 78.6 Terpijak 📐</div>
-                    <div class="check-item" onclick="toggle(this, 'Candle Konfirmasi')">Konfirmasi Candle (Engulfing/Pinbar) 🕯️</div>
-                    <div class="check-item" onclick="toggle(this, 'Risk Reward')">Risk to Reward Minimal 1:2 ⚖️</div>
-                    <div class="check-item" onclick="toggle(this, 'Psikologi')">Zero FOMO / Psikologi Tenang 🧠</div>
-                </div>
-                <div id="st-pill" class="sig-box" style="display:block; font-size:30px; margin-top:40px;">STATUS: MENUNGGU SYARAT... ❌</div>
             </div>
-        </section>
+
+            <div id="tab-lot" class="module">
+                <div class="card">
+                    <div class="card-head">
+                        <i class='bx bx-shield-quarter'></i>
+                        <h3 data-lang="t_lot">Position Sizing</h3>
+                    </div>
+                    <div class="form-group">
+                        <label data-lang="l_bal">Balance (USD)</label>
+                        <input type="number" step="1" min="0" id="l-bal" value="1000" oninput="debounceRunLot()">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label data-lang="l_risk">Risk %</label>
+                            <input type="number" step="0.1" min="0" max="100" id="l-risk" value="1" oninput="debounceRunLot()">
+                        </div>
+                        <div class="form-group">
+                            <label data-lang="l_sl">Stop Loss (Pips)</label>
+                            <input type="number" step="1" min="1" id="l-sl" value="20" oninput="debounceRunLot()">
+                        </div>
+                    </div>
+                    <div class="result-panel highlight" style="margin-top: 50px;">
+                        <span class="val-label" data-lang="res_lot">Recommended Lot Size</span>
+                        <span class="val-large" id="l-res" style="color: var(--primary);">0.05</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-settings" class="module">
+                <div class="card">
+                    <div class="card-head">
+                        <i class='bx bx-slider'></i>
+                        <h3 data-lang="t_set">Terminal Configuration</h3>
+                    </div>
+                    <div class="form-group">
+                        <label data-lang="l_name">Trader Identity</label>
+                        <input type="text" id="s-name" placeholder="Dion Batam">
+                    </div>
+                    <div class="form-group">
+                        <label data-lang="l_lang">Interface Language</label>
+                        <select id="s-lang" onchange="applyLang()">
+                            <option value="id">Bahasa Indonesia</option>
+                            <option value="en">English (Professional)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-lang="l_pair">Default Asset Focus</label>
+                        <select id="s-pair" onchange="updatePair()">
+                            <option value="XAUUSD">XAUUSD (GOLD)</option>
+                            <option value="EURUSD">EURUSD</option>
+                            <option value="GBPUSD">GBPUSD</option>
+                            <option value="BTCUSD">BITCOIN</option>
+                        </select>
+                    </div>
+                    <button class="btn-action" onclick="saveData()" data-lang="btn_save">Apply All Changes</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div><i class='bx bx-check-double'></i> <span id="foot-user">Dion Batam</span> | <span id="foot-pair">XAUUSD</span></div>
+            <div>Batam Quant Hub v23.1 Stable</div>
+        </footer>
     </div>
+
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        let voiceEnabled = false;
-        const synth = window.speechSynthesis;
-        function enableAudio() { voiceEnabled = true; }
-        function speak(text) {
-            if (!voiceEnabled) return;
-            if (synth.speaking) synth.cancel();
-            const msg = new SpeechSynthesisUtterance(text);
-            msg.lang = 'id-ID';
-            msg.rate = 1.2;
-            synth.speak(msg);
-        }
-        function initVoice() {
-            setTimeout(() => {
-                speak("Siap Kapten Dion! Terminal Elite v21.6 aktif. Siap trading.");
-                document.getElementById('loader').classList.add('hidden');
-            }, 3000);
-        }
-        function tab(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('p-' + id).classList.add('active');
-            event.currentTarget.classList.add('active');
-            speak("Pindah ke " + id.replace(/([A-Z])/g, ' $1').toUpperCase() + ".");
-        }
-        function predict() {
-            const act = parseFloat(document.getElementById('n-act').value);
-            const forc = parseFloat(document.getElementById('n-forc').value);
-            const prev = parseFloat(document.getElementById('n-prev').value);
-            const type = document.getElementById('n-type').value;
-            const impact = document.getElementById('n-impact').value;
-            const res = document.getElementById('n-res');
-            if (isNaN(act) || isNaN(forc) || isNaN(prev)) return alert("Masukkan Previous, Forecast, dan Actual lengkap!");
-            res.style.display = "block";
-            const deviation = Math.abs(act - forc);
-            const expectedMove = Math.abs(prev - forc);
-            let strengthLevel = "BIASA";
-            if (expectedMove > 0) {
-                const ratio = deviation / expectedMove;
-                if (ratio > 0.8) strengthLevel = "KUAT";
-                else if (ratio > 0.3) strengthLevel = "SEDANG";
+        // --- Multi-Language ---
+        const dictionary = {
+            id: {
+                t_news: "Prediksi Logika Berita", t_lot: "Kalkulator Ukuran Lot", t_set: "Konfigurasi Terminal",
+                l_type: "Tipe Peristiwa", l_prev: "Sebelumnya", l_forc: "Ramalan", l_act: "Rilis Aktual",
+                l_bal: "Saldo Akun (USD)", l_risk: "Resiko %", l_sl: "Stop Loss (Pips)",
+                l_name: "Identitas Trader", l_lang: "Bahasa Antarmuka", l_pair: "Fokus Aset Utama",
+                st_wait: "Menunggu analisa...", res_lot: "Ukuran Lot Rekomendasi", btn_save: "Terapkan Perubahan",
+                bullish: "MATA UANG MENGUAT", bearish: "MATA UANG MELEMAH",
+                p_wait: "PREDIKSI: ", p_res: "HASIL: "
+            },
+            en: {
+                t_news: "Economic Logic Predictor", t_lot: "Position Sizing", t_set: "Terminal Configuration",
+                l_type: "Event Type", l_prev: "Previous", l_forc: "Forecast", l_act: "Actual Release",
+                l_bal: "Account Balance (USD)", l_risk: "Risk %", l_sl: "Stop Loss (Pips)",
+                l_name: "Trader Identity", l_lang: "Interface Language", l_pair: "Default Asset Focus",
+                st_wait: "Waiting for analysis...", res_lot: "Recommended Lot Size", btn_save: "Apply All Changes",
+                bullish: "CURRENCY STRENGTHENING", bearish: "CURRENCY WEAKENING",
+                p_wait: "PREDICTION: ", p_res: "RESULT: "
             }
-            let bull = (type === 'job') ? act < forc : act > forc;
-            let sigText = bull ? `BUY / ${strengthLevel} 🟢📈` : `SELL / ${strengthLevel} 🔴📉`;
-            res.innerText = sigText;
-            res.className = "sig-box " + (bull ? "buy-sig" : "sell-sig");
-            speak(`Kapten Dion, sinyal ${bull ? 'BUY' : 'SELL'} ${strengthLevel.toLowerCase()}.`);
+        };
+
+        let tvWidget = null;
+        let chartLoaded = false;
+
+        function switchTab(tabId, el) {
+            document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            el.classList.add('active');
+
+            if (tabId === 'tab-chart' && !chartLoaded) {
+                loadChart();
+                chartLoaded = true;
+            }
         }
-        function calcLot() {
-            const acc = parseFloat(document.getElementById('acc-type').value);
-            const bal = parseFloat(document.getElementById('c-bal').value);
-            const risk = parseFloat(document.getElementById('c-risk').value);
-            const sl = parseFloat(document.getElementById('c-sl').value);
-            const pipVal = parseFloat(document.getElementById('pip-val').value) || 10;
-            if (!bal || !sl || sl <= 0) {
-                speak("Kapten Dion, periksa saldo dan stop loss harus lebih dari 0.");
+
+        function loadChart() {
+            document.getElementById('chart-skel').style.display = 'block'; // show skeleton
+
+            const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+            const pair = document.getElementById('s-pair')?.value || "OANDA:XAUUSD";
+
+            if (tvWidget) {
+                tvWidget.remove();
+                tvWidget = null;
+            }
+
+            tvWidget = new TradingView.widget({
+                autosize: true,
+                symbol: pair,
+                interval: "H1",
+                timezone: "Asia/Jakarta",
+                theme: theme,
+                style: "1",
+                locale: document.getElementById('s-lang')?.value || "id",
+                enable_publishing: false,
+                allow_symbol_change: true,
+                container_id: "tradingview_pro"
+            });
+
+            // hide skeleton after load (approx)
+            setTimeout(() => {
+                document.getElementById('chart-skel').style.display = 'none';
+            }, 1500);
+        }
+
+        // News + debounce
+        let newsTimer;
+        function debounceRunNews() {
+            clearTimeout(newsTimer);
+            newsTimer = setTimeout(runNews, 400);
+        }
+        function runNews() {
+            const lang = document.getElementById('s-lang').value;
+            const type = document.getElementById('n-type').value;
+            const prev = parseFloat(document.getElementById('n-prev').value) || 0;
+            const forc = parseFloat(document.getElementById('n-forc').value) || 0;
+            const act = parseFloat(document.getElementById('n-act').value);
+
+            const panel = document.getElementById('news-res-panel');
+            const res = document.getElementById('n-result');
+            const stat = document.getElementById('n-stat');
+
+            let prediction = "";
+            let isUp;
+
+            if (isNaN(prev) || isNaN(forc)) {
+                stat.innerText = dictionary[lang].st_wait;
+                res.innerText = "";
+                panel.className = "result-panel highlight";
                 return;
             }
-            const riskMoney = bal * (risk / 100);
-            const lot = (riskMoney / (sl * pipVal)) * (100000 / acc);
-            document.getElementById('res-lot').innerText = lot.toFixed(2);
-            document.getElementById('res-money').innerText = "$" + riskMoney.toFixed(2) + " Risk";
-            speak("Kapten Dion, lot rekomendasi: " + lot.toFixed(2) + " lot. Risk terkendali.");
-        }
-        function toggle(el, name) {
-            el.classList.toggle('active');
-            if (el.classList.contains('active')) {
-                speak(name + " siap, Kapten Dion.");
-            }
-            const count = document.querySelectorAll('.check-item.active').length;
-            const pill = document.getElementById('st-pill');
-            if (count === 6) {
-                pill.className = "sig-box buy-sig";
-                pill.innerText = "ENTRY BOLEH DILAKUKAN! ✅💥";
-                speak("Kapten Dion, semua syarat terpenuhi. Entry boleh dilakukan.");
-                confettiEffect();
+
+            if (isNaN(act)) {
+                isUp = (type === "unemployment") ? (forc < prev) : (forc > prev);
+                stat.innerText = dictionary[lang].p_wait;
+                prediction = isUp ? dictionary[lang].bullish : dictionary[lang].bearish;
+                panel.className = "result-panel highlight";
             } else {
-                pill.className = "sig-box";
-                pill.innerText = `MENUNGGU (${count}/6) ❌`;
+                isUp = (type === "unemployment") ? (act < forc) : (act > forc);
+                stat.innerText = dictionary[lang].p_res;
+                prediction = isUp ? dictionary[lang].bullish : dictionary[lang].bearish;
+                panel.className = isUp ? "result-panel up" : "result-panel down";
+            }
+
+            res.innerText = prediction;
+        }
+
+        // Lot + debounce
+        let lotTimer;
+        function debounceRunLot() {
+            clearTimeout(lotTimer);
+            lotTimer = setTimeout(runLot, 400);
+        }
+        function runLot() {
+            const bal = parseFloat(document.getElementById('l-bal').value) || 0;
+            const risk = parseFloat(document.getElementById('l-risk').value) || 0;
+            const sl = parseFloat(document.getElementById('l-sl').value) || 0;
+
+            if (bal > 0 && risk > 0 && sl > 0) {
+                // Basic forex: 1 pip ≈ $10 per lot standard
+                // Untuk XAUUSD bisa adjust nanti kalau mau
+                const lot = ((bal * (risk / 100)) / (sl * 10)).toFixed(2);
+                document.getElementById('l-res').innerText = lot;
+            } else {
+                document.getElementById('l-res').innerText = "0.00";
             }
         }
-        function resetEntry() {
-            document.querySelectorAll('.check-item').forEach(i => i.classList.remove('active'));
-            document.getElementById('st-pill').className = "sig-box";
-            document.getElementById('st-pill').innerText = "STATUS: MENUNGGU SYARAT... ❌";
-            speak("Checklist direset, Kapten Dion.");
+
+        function toggleTheme() {
+            const body = document.body;
+            const isDark = body.classList.toggle('dark-mode');
+            localStorage.setItem('d-theme', isDark ? 'dark' : 'light');
+            document.getElementById('theme-icon').className = isDark ? 'bx bx-sun' : 'bx bx-moon';
+            if (chartLoaded) loadChart(); // reload chart untuk sync theme
         }
-        function confettiEffect() {
-            for (let i = 0; i < 120; i++) {
-                let conf = document.createElement('div');
-                conf.style.position = 'fixed';
-                conf.style.left = Math.random() * 100 + 'vw';
-                conf.style.top = '-20px';
-                conf.style.width = '12px';
-                conf.style.height = '12px';
-                conf.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
-                conf.style.borderRadius = '50%';
-                conf.style.zIndex = '9998';
-                conf.style.pointerEvents = 'none';
-                conf.animate([
-                    { transform: 'translateY(0) rotate(0deg)' },
-                    { transform: 'translateY(100vh) rotate(720deg)' }
-                ], { duration: 3200, easing: 'linear' });
-                document.body.appendChild(conf);
-                setTimeout(() => conf.remove(), 3200);
+
+        function applyLang() {
+            const l = document.getElementById('s-lang').value;
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (dictionary[l][key]) el.innerText = dictionary[l][key];
+            });
+        }
+
+        function updatePair() {
+            const p = document.getElementById('s-pair').value;
+            document.getElementById('badge-p').innerText = p + " Focus";
+            document.getElementById('foot-pair').innerText = p;
+            if (chartLoaded) loadChart();
+        }
+
+        function saveData() {
+            localStorage.setItem('d-name', document.getElementById('s-name').value.trim());
+            document.getElementById('foot-user').innerText = document.getElementById('s-name').value || "Dion Batam";
+            alert("Konfigurasi berhasil disimpan!");
+        }
+
+        // Init
+        setInterval(() => {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString('id-ID', {hour12: false});
+        }, 1000);
+
+        window.onload = () => {
+            const savedName = localStorage.getItem('d-name');
+            const savedTheme = localStorage.getItem('d-theme');
+            if (savedName) {
+                document.getElementById('s-name').value = savedName;
+                document.getElementById('foot-user').innerText = savedName;
             }
-        }
+            if (savedTheme === 'dark') toggleTheme();
+
+            // Load chart langsung karena tab-chart active default
+            loadChart();
+            chartLoaded = true;
+
+            runLot();
+            applyLang();
+            runNews(); // init news panel
+        };
     </script>
 </body>
 </html>
